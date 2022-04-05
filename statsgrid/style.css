@@ -1,27 +1,27 @@
-.stats-grid .row {
+.stats-grid > div {
     flex-grow: 1;
     display: flex;
     max-width: 100%;
 }
 
-.stats-grid .row .stat {
+.stats-grid > div > div {
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 0px;
     overflow: hidden;
     /*border-radius: 5px;*/
 }
-.stats-grid .row .stat div {
+.stats-grid > div > div div {
     margin: 6px;
     background: linear-gradient(120deg, rgb(90, 90, 90), rgb(115, 115, 115));
     padding: 20px;
     color: white;
 }
-.stats-grid .stat.success div {
+.stats-grid > div > div.success div {
     background: linear-gradient(120deg, rgb(66, 154, 67), rgb(111, 183, 87));
 }
 
-.stats-grid .row .stat div:hover {
+.stats-grid > div > div div:hover {
     filter: brightness(1.3);
 }
 
@@ -30,7 +30,7 @@
     font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
     white-space: nowrap;
     overflow: hidden;
-    /*text-overflow: ellipsis;*/
+    /* text-overflow: ellipsis; */
 }
 .stats-grid h2 {
     /*text-transform: uppercase;*/

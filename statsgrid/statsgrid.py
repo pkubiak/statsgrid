@@ -32,7 +32,7 @@ class StatsGrid:
             cell += ({}, )
         key, value, opt = cell
 
-        classes = ["stat"]
+        classes = []
         styles = {}
         if 'size' in opt:
             styles["flex-grow"] = str(opt['size'])
@@ -40,7 +40,6 @@ class StatsGrid:
         if 'style' in opt and opt['style'] in {"success"}:
             classes.append(opt['style'])
             
-        
         # render
         if styles:
             styles_html = ";".join(f"{k}:{v}" for k, v in styles.items())
@@ -49,9 +48,12 @@ class StatsGrid:
             styles_html = ''
             
         classes_html = " ".join(classes)
+        if classes_html:
+            classes_html = f' class="{classes_html}"'
+
         value_str = self._render_value(value)
 
-        return f'<div class="{classes_html}"{styles_html}><div><h2>{key}</h2><h1>{value_str}</h1></div></div>'
+        return f'<div{classes_html}{styles_html}><div><h2>{key}</h2><h1>{value_str}</h1></div></div>'
 
     def _build_grid_html(self):
         output = ['<figure class="stats-grid">']
@@ -59,7 +61,7 @@ class StatsGrid:
             output.append(f'<figcaption>{self.caption}</figcaption>')
 
         for row in self.data:
-            output.append('<div class="row">')
+            output.append('<div>')
             for cell in row:
                 output.append(self._render_cell(cell))
             output.append('</div>')
