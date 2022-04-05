@@ -53,7 +53,7 @@ class StatsGrid:
 
         value_str = self._render_value(value)
 
-        return f'<div{classes_html}{styles_html}><div><h2>{key}</h2><h1>{value_str}</h1></div></div>'
+        return f'<div{classes_html}{styles_html}><div><h2 title="{key}">{key}</h2><h1 title="{value_str}">{value_str}</h1></div></div>'
 
     def _build_grid_html(self):
         output = ['<figure class="stats-grid">']
