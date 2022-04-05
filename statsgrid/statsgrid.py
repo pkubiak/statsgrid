@@ -4,9 +4,10 @@ from typing import Optional, Any
 
 
 class StatsGrid:
-    def __init__(self, data, *, caption: Optional[str] = None):
+    def __init__(self, data, *, caption: Optional[str] = None, font_size: Optional[int] = None):
         self.data = data
         self.caption = caption
+        self.font_size = font_size
 
     def to_svg(self):
         raise NotImplementedError()
@@ -37,7 +38,7 @@ class StatsGrid:
         if 'size' in opt:
             styles["flex-grow"] = str(opt['size'])
 
-        if 'style' in opt and opt['style'] in {"success"}:
+        if 'style' in opt:
             classes.append(opt['style'])
             
         # render
@@ -56,7 +57,8 @@ class StatsGrid:
         return f'<div{classes_html}{styles_html}><div><h2 title="{key}">{key}</h2><h1 title="{value_str}">{value_str}</h1></div></div>'
 
     def _build_grid_html(self):
-        output = ['<figure class="stats-grid">']
+        font_size_html = f' style="font-size:{self.font_size}px !important"' if self.font_size else ""
+        output = [f'<figure class="stats-grid"{font_size_html}>']
         if self.caption:
             output.append(f'<figcaption>{self.caption}</figcaption>')
 
