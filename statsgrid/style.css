@@ -18,8 +18,7 @@
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 0px;
-    overflow: hidden;
-    /*border-radius: 5px;*/
+    /* overflow: hidden; */
 }
 
 .stats-grid > div > div div {
@@ -27,15 +26,16 @@
     background: linear-gradient(120deg, rgb(90, 90, 90), rgb(115, 115, 115));
     padding: 1em;
     color: white;
+    /* border-radius: 5px; */
 }
 
 .stats-grid > div > div.success div, .stats-grid > div > div.green div {
     background: linear-gradient(120deg, rgb(66, 154, 67), rgb(111, 183, 87));
 }
-.stats-grid > div > div.red div {
+.stats-grid > div > div.red div, .stats-grid > div > div.error div {
     background: linear-gradient(120deg, rgb(223, 20, 16), rgb(240, 49, 96));
 }
-.stats-grid > div > div.orange div {
+.stats-grid > div > div.orange div, .stats-grid > div > div.warning div {
     background: linear-gradient(120deg, rgb(226, 144, 0), rgb(255, 108, 22));
 }
 .stats-grid > div > div.blue div {
@@ -60,7 +60,6 @@
     /* text-overflow: ellipsis; */
 }
 .stats-grid h2 {
-    /*text-transform: uppercase;*/
     font-weight: normal;
     font-variant: small-caps;
     font-size: 1em;
@@ -73,6 +72,6 @@
 
 .stats-grid figcaption {
     color: white;
-    font-size: 16pt;
+    font-size: 1em;
     padding-bottom: 6px;
 }
