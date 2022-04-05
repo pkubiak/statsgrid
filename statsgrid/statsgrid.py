@@ -1,6 +1,6 @@
 from functools import cached_property
 import os
-from typing import Optional
+from typing import Optional, Any
 
 
 class StatsGrid:
@@ -19,6 +19,13 @@ class StatsGrid:
         with open(os.path.join(os.path.dirname(__file__), "style.css")) as file:
             return file.read()
 
+    def _render_value(self, value: Any) -> str:
+        if isinstance(value, int):
+            return f"{value:,}"
+        if isinstance(value, float):
+            return f"{value:.2f}"
+        return str(value)
+    
     def _render_cell(self, cell):
         assert 2 <= len(cell) <= 3
         if len(cell) == 2:
@@ -42,8 +49,9 @@ class StatsGrid:
             styles_html = ''
             
         classes_html = " ".join(classes)
+        value_str = self._render_value(value)
 
-        return f'<div class="{classes_html}"{styles_html}><div><h2>{key}</h2><h1>{value}</h1></div></div>'
+        return f'<div class="{classes_html}"{styles_html}><div><h2>{key}</h2><h1>{value_str}</h1></div></div>'
 
     def _build_grid_html(self):
         output = ['<figure class="stats-grid">']
