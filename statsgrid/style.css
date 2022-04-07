@@ -1,11 +1,18 @@
 .stats-grid {
     display: flex;
     flex-direction: column;
-    background: #141619;
-    font-size: 20px;
+    background:transparent;
+    font-size: 16px;
 
-    padding: 6px;
+    padding: 0.25em;
     margin: 0;
+}
+.stats-grid.light {
+    background: #fff;
+}
+
+.stats-grid.dark {
+    background: #141619;
 }
 
 .stats-grid > div {
@@ -18,14 +25,17 @@
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 0px;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .stats-grid > div > div div {
-    margin: 6px;
+    margin: 5px;
     background: linear-gradient(120deg, rgb(90, 90, 90), rgb(115, 115, 115));
     padding: 1em;
     color: white;
+    /* box-shadow: rgba(50, 50, 105, 0.45) 0px 2px 5px 0px, rgba(0, 0, 0, 0.35) 0px 1px 1px 0px; */
+    /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+    box-shadow: rgba(50, 50, 93, 0.65) 0px 2px 5px -1px, rgba(0, 0, 0, 0.6) 0px 1px 3px -1px;
     /* border-radius: 5px; */
 }
 
@@ -57,7 +67,7 @@
     font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
     white-space: nowrap;
     overflow: hidden;
-    /* text-overflow: ellipsis; */
+    text-overflow: ellipsis;
 }
 .stats-grid h2 {
     font-weight: normal;
@@ -67,11 +77,18 @@
 .stats-grid h1 {
     text-align: center;
     font-size: 3em;
-    padding: 12px 0;
+    padding: 0.166em 0;
 }
 
+/* figcaption */
 .stats-grid figcaption {
-    color: white;
     font-size: 1em;
-    padding-bottom: 6px;
+    padding-bottom: 0.25em;
+}
+
+.stats-grid.light figcaption{
+    color: #000;
+}
+.stats-grid.dark figcaption {
+    color: #fff;
 }
