@@ -1,6 +1,6 @@
-from functools import cached_property
 import os
-from typing import Optional, Any, Union, List, Tuple
+from functools import cached_property
+from typing import Any, List, Optional, Tuple, Union
 
 
 class StatsGrid:
