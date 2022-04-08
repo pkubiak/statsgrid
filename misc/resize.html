@@ -1,0 +1,30 @@
+<body>
+<div id="demo-textarea" style="resize:both; border: 4px solid black; position: relative; border:ping;overflow: hidden;text-center; display:inline-block;text-align:center;width:300px;height:200px;">
+    <div style="white-space:nowrap; display:inline-block; overflow:hidden;text-overflow:ellipsis;padding: 10px; position: absolute;left:50%;top:50%; transform:translate(-50%,-50%); font-size:100px;" id="x">Lorem ipsum dolor</div>
+</div>
+
+<script>
+const resize_ob = new ResizeObserver(function(entries) {
+	// since we are observing only a single element, so we access the first element in entries array
+	let rect = entries[0].contentRect;
+
+	// current width & height
+	let width = rect.width;
+	let height = rect.height;
+
+	console.log('Current Width: ' + width+ '; Current Height: '+ height);
+
+
+    let x = document.getElementById('x');
+    let zoom = Math.min(rect.width / x.clientWidth, rect.height / x.clientHeight);
+    zoom = Math.min(1, zoom);;
+    zoom = Math.max(zoom, 0.5);
+    x.style.zoom = zoom;
+    console.log(x.clientWidth, x.clientHeight, zoom);
+
+});
+
+// start observing for resize
+resize_ob.observe(document.querySelector("#demo-textarea"));
+</script>
+</body>
