@@ -15,12 +15,33 @@ Module for creating Grafana style metrics dashboards in python.
 
 ![Preview image](/misc/preview.jpg)
 
+
 ## Examples
+
+```python
+from statsgrid import StatsGrid
+
+StatsGrid([
+    [
+        ("accuracy", "0.71 ↗", dict(style="success")),
+        ("precision", "0.92 ↘", dict(style="warning")),
+        ("f1-score",  "0.80} ↗", dict(style="success"))
+    ], [
+        ("train-corpus-size", 1234567),
+        ("test-corpus-size", 34567),
+        ("no-classes", 42),
+        ("training-time [s]", 123.45),
+    ], [
+        ("model-location", "s3://mybucket/model.pth", dict(size=3)),
+        ("model-size [MiB]", 234.54), 
+    ]
+], caption="Classifier Training Summary", style="dark")
+```
 
 Check [/examples](/examples) directory for sample Jupyter Notebooks.
 
 ## API Reference
-TBD
+TBA
 
 ## CHANGELOG
 
