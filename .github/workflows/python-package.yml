@@ -34,7 +34,7 @@ jobs:
     - name: Analysing the code with pylint
       continue-on-error: true
       run: |
-        pylint $(git ls-files '*.py')
+        pylint --ignore-patterns=test_.*?py $(git ls-files '*.py')
 
     - name: Lint with flake8
       continue-on-error: true
@@ -47,4 +47,6 @@ jobs:
     - name: Test with pytest
       continue-on-error: true
       run: |
+        pwd
+        find
         pytest

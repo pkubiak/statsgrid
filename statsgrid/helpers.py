@@ -1,6 +1,5 @@
+"""Module contains helper functions"""
 from typing import Dict, List, Any
-
-from numpy import isin
 
 
 def _render_attr(value: Any) -> str:
@@ -15,10 +14,28 @@ def tag(
     name: str,
     content: List[str] = None,
     *,
-    attrs: Dict[str, str] = None,
+    attrs: Dict[str, Any] = None,
     close: bool = True,
 ) -> str:
-    attrs_html = " ".join(f'{k}="{_render_attr(v)}"' for k, v in (attrs or {}).items() if v)
+    """
+    Simple HTML Tag wrapper.
+
+    Args:
+        name (str): tag name (e.g. div)
+        content (List[str], optional): Inner content of tag. Defaults to None.
+        attrs (Dict[str, Any], optional): Mapping of tag attributes. Defaults to None.
+        close (bool, optional): If False no closing tag is generated. Defaults to True.
+
+    Raises:
+        TypeError: _description_
+        ValueError: _description_
+
+    Returns:
+        str: Tag rendered as HTML
+    """
+    attrs_html = " ".join(
+        f'{k}="{_render_attr(v)}"' for k, v in (attrs or {}).items() if v
+    )
     if attrs_html:
         attrs_html = " " + attrs_html
 

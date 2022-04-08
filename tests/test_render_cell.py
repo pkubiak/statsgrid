@@ -1,4 +1,3 @@
-import pytest
 from statsgrid.statsgrid import _render_cell
 
 
