@@ -1,9 +1,13 @@
 """Module provides implementation of StatsGrid"""
 import os
-from functools import cached_property
 from typing import Any, List, Optional, Tuple, Union
 
 from .helpers import tag
+
+with open(
+    os.path.join(os.path.dirname(__file__), "style.css"), "r", encoding="utf-8"
+) as file:
+    _BASE_CSS = file.read()
 
 
 def _render_value(value: Any) -> str:
@@ -83,13 +87,6 @@ class StatsGrid:
 
         return StatsGrid(**params)
 
-    @cached_property
-    def _base_css(self) -> str:
-        with open(
-            os.path.join(os.path.dirname(__file__), "style.css"), "r", encoding="utf-8"
-        ) as file:
-            return file.read()
-
     def _build_grid_html(self) -> str:
         styles = {}
         classes = ["stats-grid"] + self.style
@@ -124,7 +121,7 @@ class StatsGrid:
             str: HTML representation of StatsGrid
         """
         grid = self._build_grid_html()
-        return f"<style>{self._base_css}</style>{grid}"
+        return f"<style>{_BASE_CSS}</style>{grid}"
 
     def _repr_html_(self) -> str:
         return self.to_html()
