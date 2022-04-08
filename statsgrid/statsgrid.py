@@ -1,3 +1,4 @@
+"""Module provides implementation of StatsGrid"""
 import os
 from functools import cached_property
 from typing import Any, List, Optional, Tuple, Union
@@ -48,19 +49,21 @@ def _render_cell(cell: Tuple) -> str:
 
 
 class StatsGrid:
+    """TBA"""
+
     def __init__(
         self,
         data,
         *,
         caption: Optional[str] = None,
         font_size: Optional[int] = None,
-        style: Union[str, List[str]] = [],
+        style: Optional[Union[str, List[str]]] = None,
         caption_position: str = "top left",
     ):
         self.data = data
         self.caption = caption
         self.font_size = font_size
-        self.style = [style] if isinstance(style, str) else list(style)
+        self.style = [style] if isinstance(style, str) else list(style or [])
 
         # caption_position
         if not isinstance(caption_position, str):
@@ -79,12 +82,6 @@ class StatsGrid:
         params.pop("_base_css", None)
 
         return StatsGrid(**params)
-
-    def to_svg(self):
-        raise NotImplementedError()
-
-    def to_png(self):
-        raise NotImplementedError()
 
     @cached_property
     def _base_css(self) -> str:
@@ -120,6 +117,12 @@ class StatsGrid:
         return tag("figure", content, attrs={"class": classes, "style": styles})
 
     def to_html(self) -> str:
+        """
+        Create HTML representation of current StatsGrid
+
+        Returns:
+            str: HTML representation of StatsGrid
+        """
         grid = self._build_grid_html()
         return f"<style>{self._base_css}</style>{grid}"
 
