@@ -5,7 +5,7 @@
 ![Licence MIT](https://img.shields.io/github/license/pkubiak/statsgrid)
 ![Python 3.0](https://img.shields.io/badge/python-%3E%3D3.7-brightgreen)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pkubiak/statsgrid/Python%20package)
-
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pkubiak/statsgrid/HEAD?labpath=examples%2Fdemo.ipynb)
 
 </br>
 
@@ -38,7 +38,7 @@ StatsGrid([
 ], caption="Classifier Training Summary", style="dark")
 ```
 
-Check [/examples](/examples) directory for sample Jupyter Notebooks.
+Check [/examples](/examples) directory for sample Jupyter Notebooks or run it using [mybinder.org](https://mybinder.org/v2/gh/pkubiak/statsgrid/HEAD?labpath=examples%2Fdemo.ipynb)
 
 ## API Reference
 TBA
