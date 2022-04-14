@@ -1,5 +1,5 @@
 """Module contains helper functions"""
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any, Tuple, Union
 import colorsys
 
 
@@ -27,7 +27,7 @@ def _render_attr(value: Any) -> str:
 
 def tag(
     name: str,
-    content: List[str] = None,
+    content: Union[str, List[str], None] = None,
     *,
     attrs: Dict[str, Any] = None,
     close: bool = True,
@@ -80,7 +80,7 @@ def _hex_to_rgb(color: str) -> Tuple[int, int, int]:
     return (red, green, blue)
 
 
-def _rgb_to_hex(red: float, green: float, blue: float) -> Tuple[str, str]:
+def _rgb_to_hex(red: float, green: float, blue: float) -> str:
     assert 0 <= red <= 1 and 0 <= green <= 1 and 0 <= blue <= 1
     return "#%02x%02x%02x" % (round(255 * red), round(255 * green), round(255 * blue))  # noqa
 
@@ -94,7 +94,7 @@ def build_linear_gradient(color: str) -> Tuple[str, str]:
 
     Returns:
         Tuple[str, str]: _description_
-    """    
+    """
     red, green, blue = _hex_to_rgb(color)
     is_dark = (red * 0.299 + green * 0.587 + blue * 0.114) <= 186
     factor = -1.0 if is_dark else 0.7
