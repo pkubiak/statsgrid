@@ -39,25 +39,6 @@
     /* border-radius: 5px; */
 }
 
-.stats-grid > div > div.success div, .stats-grid > div > div.green div {
-    background: linear-gradient(120deg, rgb(66, 154, 67), rgb(111, 183, 87));
-}
-.stats-grid > div > div.red div, .stats-grid > div > div.error div {
-    background: linear-gradient(120deg, rgb(223, 20, 16), rgb(240, 49, 96));
-}
-.stats-grid > div > div.orange div, .stats-grid > div > div.warning div {
-    background: linear-gradient(120deg, rgb(226, 144, 0), rgb(255, 108, 22));
-}
-.stats-grid > div > div.blue div {
-    background: linear-gradient(120deg, rgb(18, 74, 234), rgb(63, 156, 240));
-}
-.stats-grid > div > div.purple div {
-    background: linear-gradient(120deg, rgb(172, 59, 200), rgb(159, 99, 211));
-}
-.stats-grid > div > div.yellow div {
-    background: linear-gradient(120deg, rgb(211, 210, 5), rgb(249, 187, 17));
-}
-
 .stats-grid > div > div div:hover {
     filter: brightness(1.3);
 }

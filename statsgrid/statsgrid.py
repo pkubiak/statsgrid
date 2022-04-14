@@ -1,8 +1,10 @@
 """Module provides implementation of StatsGrid"""
 import os
+import re
 from typing import Any, List, Optional, Tuple, Union
 
-from .helpers import tag
+from .helpers import tag, build_linear_gradient, BUILTIN_COLORS
+
 
 with open(
     os.path.join(os.path.dirname(__file__), "style.css"), "r", encoding="utf-8"
@@ -18,42 +20,85 @@ def _render_value(value: Any) -> str:
     return str(value)
 
 
-def _render_cell(cell: Tuple) -> str:
-    assert 2 <= len(cell) <= 3
-    if len(cell) == 2:
-        cell += ({},)
-    key, value, opt = cell
+def render_cell(
+    title: str,
+    value: Any,
+    *,
+    size: Optional[int] = None,
+    color: Optional[str] = None,
+    style: str = "gradient",
+) -> str:
+    """
+    TODO: Render single grid cell as HTML
 
-    classes = []
-    styles = {}
-    if "size" in opt:
-        styles["flex-grow"] = str(opt["size"])
+    Args:
+        title (str): _description_
+        value (Any): _description_
+        size (Optional[int], optional): _description_. Defaults to None.
+        color (Optional[str], optional): _description_. Defaults to None.
+        style (str, optional): _description_. Defaults to "gradient".
 
-    if "style" in opt:
-        classes.append(opt["style"])
+    Raises:
+        ValueError: _description_
+        NotImplementedError: _description_
+        ValueError: _description_
 
-    value_str = _render_value(value)
+    Returns:
+        str: HTML representation of cell
+    """
+    styles_outter = {}
+    styles_inner = {}
+    if size:
+        styles_outter["flex-grow"] = str(size)
+
+    if color is not None:
+        hex_color = BUILTIN_COLORS.get(color, color)
+        if not re.fullmatch("#[0-9a-f]{6}", hex_color):
+            raise ValueError(f"Unsupported cell color: {hex_color}")
+
+        if style == "gradient":
+            foreground, background = build_linear_gradient(hex_color)
+            styles_inner["background"] = background
+            styles_inner["color"] = foreground
+        elif style == "text":
+            styles_inner["background"] = "transparent"
+            styles_inner["color"] = hex_color
+        else:
+            raise ValueError(f"Unsupported cell style: {style}")
+
+    content = []
+    if title:
+        content.append(tag("h2", title, attrs={"title": title}))
+
+    if value is not None:
+        value_str = _render_value(value)
+        content.append(tag("h1", value_str, attrs={"title": value_str}))
 
     return tag(
         "div",
         [
             tag(
                 "div",
-                [
-                    tag("h2", key, attrs={"title": key}),
-                    tag("h1", value_str, attrs={"title": value_str}),
-                ],
+                content,
+                attrs=dict(style=styles_inner),
             )
         ],
         attrs={
-            "class": classes,
-            "style": styles,
+            "style": styles_outter,
         },
     )
 
 
+def _render_cell_tuple(cell: Tuple) -> str:
+    assert 2 <= len(cell) <= 3
+    if len(cell) == 2:
+        cell += ({},)
+    key, value, opt = cell
+    return render_cell(key, value, **opt)
+
+
 class StatsGrid:
-    """TBA"""
+    """TODO: TBA"""
 
     def __init__(
         self,
@@ -72,13 +117,13 @@ class StatsGrid:
         # caption_position
         if not isinstance(caption_position, str):
             raise ValueError()
-        caption_position = caption_position.split(" ")
-        if (
-            len(caption_position) != 2
-            or caption_position[0] not in {"top", "bottom"}
-            or caption_position[1] not in {"left", "center", "right"}
-        ):
-            raise ValueError()
+        try:
+            vertical, horizontal = caption_position.split(" ")
+            assert vertical in {"top", "bottom"}
+            assert horizontal in {"left", "center", "right"}
+        except (ValueError, AssertionError) as e:
+            raise ValueError(f"Wrong caption_position set: {caption_position}") from e
+
         self.caption_position = caption_position
 
     def __call__(self, **kwargs) -> "StatsGrid":
@@ -106,7 +151,7 @@ class StatsGrid:
                 content.append(caption_html)
 
         for row in self.data:
-            content.append(tag("div", [_render_cell(cell) for cell in row]))
+            content.append(tag("div", [_render_cell_tuple(cell) for cell in row]))
 
         if self.caption and self.caption_position[0] == "bottom":
             content.append(caption_html)

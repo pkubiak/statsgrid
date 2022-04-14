@@ -43,7 +43,6 @@ jobs:
         pylint --ignore-patterns=test_.*?py,__init__.py $(git ls-files '*.py')
 
     - name: Test with pytest
-      continue-on-error: true
       run: |
         python -m pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=statsgrid | tee pytest-coverage.txt
 
