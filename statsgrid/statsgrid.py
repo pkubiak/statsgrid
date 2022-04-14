@@ -20,7 +20,14 @@ def _render_value(value: Any) -> str:
     return str(value)
 
 
-def render_cell(title: str, value: Any, *, size: Optional[int] = None, color: Optional[str] = None, style: str = "gradient") -> str:
+def render_cell(
+    title: str,
+    value: Any,
+    *,
+    size: Optional[int] = None,
+    color: Optional[str] = None,
+    style: str = "gradient",
+) -> str:
     styles_outter = {}
     styles_inner = {}
     if size:
@@ -35,7 +42,7 @@ def render_cell(title: str, value: Any, *, size: Optional[int] = None, color: Op
                     color = BUILTIN_COLORS[color]
                 if not re.fullmatch("#[0-9a-f]{6}", color):
                     raise ValueError(f"Unsupported cell color: {color}")
-                
+
                 foreground, background = build_linear_gradient(color)
             styles_inner["background"] = background
             styles_inner["color"] = foreground
@@ -56,13 +63,14 @@ def render_cell(title: str, value: Any, *, size: Optional[int] = None, color: Op
                     tag("h2", title, attrs={"title": title}),
                     tag("h1", value_str, attrs={"title": value_str}),
                 ],
-                attrs=dict(style=styles_inner)
+                attrs=dict(style=styles_inner),
             )
         ],
         attrs={
             "style": styles_outter,
         },
     )
+
 
 def _render_cell_tuple(cell: Tuple) -> str:
     assert 2 <= len(cell) <= 3

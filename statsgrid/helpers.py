@@ -4,14 +4,19 @@ import colorsys
 
 
 BUILTIN_COLORS = {
-    "red": '#f2495c',
-    "orange": '#ff9830',
-    "yellow": '#fade2a',
-    "green": '#73bf69',
-    "blue": '#5794f2',
-    "purple": '#b877d9'
+    "red": "#f2495c",
+    "orange": "#ff9830",
+    "yellow": "#fade2a",
+    "green": "#73bf69",
+    "blue": "#5794f2",
+    "purple": "#b877d9",
 }
-for a, b in [("error", "red"), ("warning", "orange"), ("info", "blue"), ("success", "green")]:
+for a, b in [
+    ("error", "red"),
+    ("warning", "orange"),
+    ("info", "blue"),
+    ("success", "green"),
+]:
     BUILTIN_COLORS[a] = BUILTIN_COLORS[b]
 
 
@@ -86,13 +91,17 @@ def rgb_to_hex(r: float, g: float, b: float) -> Tuple[str, str]:
 def build_linear_gradient(color: str) -> Tuple[str, str]:
     factor = 1.0
     r, g, b = hex_to_rgb(color)
-    text = '#000' if (r*0.299 + g*0.587 + b*0.114) > 186 else '#fff'
-    factor = -1.0 if text == '#fff' else 0.7
+    text = "#000" if (r * 0.299 + g * 0.587 + b * 0.114) > 186 else "#fff"
+    factor = -1.0 if text == "#fff" else 0.7
 
     h, l, s = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
 
-    color1 = colorsys.hls_to_rgb((h + 8 / 360) % 1, min(1, max(l + 0.15 * factor, 0)), s)
-    color2 = colorsys.hls_to_rgb((h - 8 / 360) % 1, min(1, max(l + 0.05 * factor, 0)), s)
+    color1 = colorsys.hls_to_rgb(
+        (h + 8 / 360) % 1, min(1, max(l + 0.15 * factor, 0)), s
+    )
+    color2 = colorsys.hls_to_rgb(
+        (h - 8 / 360) % 1, min(1, max(l + 0.05 * factor, 0)), s
+    )
     color1, color2 = rgb_to_hex(*color1), rgb_to_hex(*color2)
 
     return text, f"linear-gradient(120deg, {color1}, {color2})"
