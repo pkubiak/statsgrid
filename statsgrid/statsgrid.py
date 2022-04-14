@@ -55,7 +55,7 @@ def render_cell(
         hex_color = BUILTIN_COLORS.get(color, color)
         if not re.fullmatch("#[0-9a-f]{6}", hex_color):
             raise ValueError(f"Unsupported cell color: {hex_color}")
-                
+
         if style == "gradient":
             foreground, background = build_linear_gradient(hex_color)
             styles_inner["background"] = background
@@ -66,17 +66,20 @@ def render_cell(
         else:
             raise ValueError(f"Unsupported cell style: {style}")
 
-    value_str = _render_value(value)
+    content = []
+    if title:
+        content.append(tag("h2", title, attrs={"title": title}))
+
+    if value is not None:
+        value_str = _render_value(value)
+        content.append(tag("h1", value_str, attrs={"title": value_str}))
 
     return tag(
         "div",
         [
             tag(
                 "div",
-                [
-                    tag("h2", title, attrs={"title": title}),
-                    tag("h1", value_str, attrs={"title": value_str}),
-                ],
+                content,
                 attrs=dict(style=styles_inner),
             )
         ],
