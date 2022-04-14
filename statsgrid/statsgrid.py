@@ -28,6 +28,24 @@ def render_cell(
     color: Optional[str] = None,
     style: str = "gradient",
 ) -> str:
+    """
+    Render single grid cell as HTML
+
+    Args:
+        title (str): _description_
+        value (Any): _description_
+        size (Optional[int], optional): _description_. Defaults to None.
+        color (Optional[str], optional): _description_. Defaults to None.
+        style (str, optional): _description_. Defaults to "gradient".
+
+    Raises:
+        ValueError: _description_
+        NotImplementedError: _description_
+        ValueError: _description_
+
+    Returns:
+        str: HTML representation of cell
+    """    
     styles_outter = {}
     styles_inner = {}
     if size:
@@ -38,8 +56,7 @@ def render_cell(
             if color == "transparent":
                 foreground, background = "auto", "transparent"
             else:
-                if color in BUILTIN_COLORS:
-                    color = BUILTIN_COLORS[color]
+                color = BUILTIN_COLORS.get(color, color)
                 if not re.fullmatch("#[0-9a-f]{6}", color):
                     raise ValueError(f"Unsupported cell color: {color}")
 
