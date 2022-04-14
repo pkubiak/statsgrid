@@ -55,11 +55,11 @@ def render_cell(
         if color == "transparent":
             foreground, background = "auto", "transparent"
         else:
-            color = BUILTIN_COLORS.get(color, color)
-            if not re.fullmatch("#[0-9a-f]{6}", color):
-                raise ValueError(f"Unsupported cell color: {color}")
+            hex_color = BUILTIN_COLORS.get(color, color)
+            if not re.fullmatch("#[0-9a-f]{6}", hex_color):
+                raise ValueError(f"Unsupported cell color: {hex_color}")
 
-            foreground, background = build_linear_gradient(color)
+            foreground, background = build_linear_gradient(hex_color)
         styles_inner["background"] = background
         styles_inner["color"] = foreground
     elif style == "text":
@@ -115,13 +115,13 @@ class StatsGrid:
         # caption_position
         if not isinstance(caption_position, str):
             raise ValueError()
-        caption_position = caption_position.split(" ")
-        if (
-            len(caption_position) != 2
-            or caption_position[0] not in {"top", "bottom"}
-            or caption_position[1] not in {"left", "center", "right"}
-        ):
-            raise ValueError()
+        try:
+            vertical, horizontal = caption_position.split(" ")
+            assert vertical in {"top", "bottom"}
+            assert horizontal in {"left", "center", "right"}
+        except (ValueError, AssertionError):
+            raise ValueError(f"Wrong caption_position set: {caption_position}")
+
         self.caption_position = caption_position
 
     def __call__(self, **kwargs) -> "StatsGrid":

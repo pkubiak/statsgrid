@@ -3,7 +3,7 @@ from typing import Dict, List, Any, Tuple, Union
 import colorsys
 
 
-BUILTIN_COLORS = {
+BUILTIN_COLORS: Dict[str, str] = {
     "red": "#f2495c",
     "error": "#f2495c",
     "orange": "#ff9830",
