@@ -33,7 +33,7 @@ def tag(
     close: bool = True,
 ) -> str:
     """
-    Simple HTML Tag wrapper.
+    TODO: Simple HTML Tag wrapper.
 
     Args:
         name (str): tag name (e.g. div)
@@ -91,7 +91,7 @@ def _rgb_to_hex(red: float, green: float, blue: float) -> str:
 
 def build_linear_gradient(color: str) -> Tuple[str, str]:
     """
-    Build CSS linear-gradient based on given color
+    TODO: Build CSS linear-gradient based on given color
 
     Args:
         color (str): _description_

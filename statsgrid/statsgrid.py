@@ -29,7 +29,7 @@ def render_cell(
     style: str = "gradient",
 ) -> str:
     """
-    Render single grid cell as HTML
+    TODO: Render single grid cell as HTML
 
     Args:
         title (str): _description_
@@ -51,17 +51,18 @@ def render_cell(
     if size:
         styles_outter["flex-grow"] = str(size)
 
-    if style == "gradient" and color is not None:
-        if color == "transparent":
-            foreground, background = "auto", "transparent"
-        else:
-            hex_color = BUILTIN_COLORS.get(color, color)
-            if not re.fullmatch("#[0-9a-f]{6}", hex_color):
-                raise ValueError(f"Unsupported cell color: {hex_color}")
+    if style == "gradient":
+        if color is not None:
+            if color == "transparent":
+                foreground, background = "auto", "transparent"
+            else:
+                hex_color = BUILTIN_COLORS.get(color, color)
+                if not re.fullmatch("#[0-9a-f]{6}", hex_color):
+                    raise ValueError(f"Unsupported cell color: {hex_color}")
 
-            foreground, background = build_linear_gradient(hex_color)
-        styles_inner["background"] = background
-        styles_inner["color"] = foreground
+                foreground, background = build_linear_gradient(hex_color)
+            styles_inner["background"] = background
+            styles_inner["color"] = foreground
     elif style == "text":
         raise NotImplementedError()
     else:
@@ -96,7 +97,7 @@ def _render_cell_tuple(cell: Tuple) -> str:
 
 
 class StatsGrid:
-    """TBA"""
+    """TODO: TBA"""
 
     def __init__(
         self,
