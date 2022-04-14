@@ -82,11 +82,9 @@ def _hex_to_rgb(color: str) -> Tuple[int, int, int]:
 
 def _rgb_to_hex(red: float, green: float, blue: float) -> str:
     assert 0 <= red <= 1 and 0 <= green <= 1 and 0 <= blue <= 1
-    return "#%02x%02x%02x" % (
-        round(255 * red),
-        round(255 * green),
-        round(255 * blue),
-    )  # noqa
+    red_i, green_i, blue_i = round(255 * red), round(255 * green), round(255 * blue)
+
+    return f"#{red_i:02x}{green_i:02x}{blue_i:02x}"
 
 
 def build_linear_gradient(color: str) -> Tuple[str, str]:
@@ -103,13 +101,15 @@ def build_linear_gradient(color: str) -> Tuple[str, str]:
     is_dark = (red * 0.299 + green * 0.587 + blue * 0.114) <= 186
     factor = -1.0 if is_dark else 0.7
 
-    h, l, s = colorsys.rgb_to_hls(red / 255, green / 255, blue / 255)  # noqa
+    hue, lightness, saturation = colorsys.rgb_to_hls(
+        red / 255, green / 255, blue / 255
+    )  # noqa
 
     color1 = colorsys.hls_to_rgb(
-        (h + 8 / 360) % 1, min(1, max(l + 0.15 * factor, 0)), s
+        (hue + 8 / 360) % 1, min(1, max(lightness + 0.15 * factor, 0)), saturation
     )
     color2 = colorsys.hls_to_rgb(
-        (h - 8 / 360) % 1, min(1, max(l + 0.05 * factor, 0)), s
+        (hue - 8 / 360) % 1, min(1, max(lightness + 0.05 * factor, 0)), saturation
     )
     hex_1, hex_2 = _rgb_to_hex(*color1), _rgb_to_hex(*color2)
 

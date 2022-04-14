@@ -120,8 +120,8 @@ class StatsGrid:
             vertical, horizontal = caption_position.split(" ")
             assert vertical in {"top", "bottom"}
             assert horizontal in {"left", "center", "right"}
-        except (ValueError, AssertionError):
-            raise ValueError(f"Wrong caption_position set: {caption_position}")
+        except (ValueError, AssertionError) as e:
+            raise ValueError(f"Wrong caption_position set: {caption_position}") from e
 
         self.caption_position = caption_position
 
