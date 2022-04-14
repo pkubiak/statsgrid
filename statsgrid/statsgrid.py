@@ -51,22 +51,20 @@ def render_cell(
     if size:
         styles_outter["flex-grow"] = str(size)
 
-    if style == "gradient":
-        if color is not None:
-            if color == "transparent":
-                foreground, background = "auto", "transparent"
-            else:
-                hex_color = BUILTIN_COLORS.get(color, color)
-                if not re.fullmatch("#[0-9a-f]{6}", hex_color):
-                    raise ValueError(f"Unsupported cell color: {hex_color}")
-
-                foreground, background = build_linear_gradient(hex_color)
+    if color is not None:
+        hex_color = BUILTIN_COLORS.get(color, color)
+        if not re.fullmatch("#[0-9a-f]{6}", hex_color):
+            raise ValueError(f"Unsupported cell color: {hex_color}")
+                
+        if style == "gradient":
+            foreground, background = build_linear_gradient(hex_color)
             styles_inner["background"] = background
             styles_inner["color"] = foreground
-    elif style == "text":
-        raise NotImplementedError()
-    else:
-        raise ValueError(f"Unsupported cell style: {style}")
+        elif style == "text":
+            styles_inner["background"] = "transparent"
+            styles_inner["color"] = hex_color
+        else:
+            raise ValueError(f"Unsupported cell style: {style}")
 
     value_str = _render_value(value)
 

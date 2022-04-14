@@ -45,5 +45,10 @@ TBA
 
 ## CHANGELOG
 
+- 2022.04.14
+    - 🚀 implemented automatic background gradient generation for any color
+    - 🔥 renamed `style` to `color` cell parameter
+    - 🚀 add `text` cell style
+
 - 2022.04.08
     - initial version 
