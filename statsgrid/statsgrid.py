@@ -1,8 +1,10 @@
 """Module provides implementation of StatsGrid"""
 import os
+import re
 from typing import Any, List, Optional, Tuple, Union
 
-from .helpers import tag
+from .helpers import tag, build_linear_gradient, BUILTIN_COLORS
+
 
 with open(
     os.path.join(os.path.dirname(__file__), "style.css"), "r", encoding="utf-8"
@@ -18,19 +20,30 @@ def _render_value(value: Any) -> str:
     return str(value)
 
 
-def _render_cell(cell: Tuple) -> str:
-    assert 2 <= len(cell) <= 3
-    if len(cell) == 2:
-        cell += ({},)
-    key, value, opt = cell
+def render_cell(title: str, value: Any, *, size: Optional[int] = None, color: Optional[str] = None, style: str = "gradient") -> str:
+    styles_outter = {}
+    styles_inner = {}
+    if size:
+        styles_outter["flex-grow"] = str(size)
 
-    classes = []
-    styles = {}
-    if "size" in opt:
-        styles["flex-grow"] = str(opt["size"])
+    if style == "gradient":
+        if color:
+            if color == "transparent":
+                foreground, background = "auto", "transparent"
+            else:
+                if color in BUILTIN_COLORS:
+                    color = BUILTIN_COLORS[color]
+                if not re.fullmatch("#[0-9a-f]{6}", color):
+                    raise ValueError(f"Unsupported cell color: {color}")
+                
+                foreground, background = build_linear_gradient(color)
+            styles_inner["background"] = background
+            styles_inner["color"] = foreground
 
-    if "style" in opt:
-        classes.append(opt["style"])
+    elif style == "text":
+        raise NotImplementedError()
+    else:
+        raise ValueError(f"Unsupported cell style: {style}")
 
     value_str = _render_value(value)
 
@@ -40,16 +53,23 @@ def _render_cell(cell: Tuple) -> str:
             tag(
                 "div",
                 [
-                    tag("h2", key, attrs={"title": key}),
+                    tag("h2", title, attrs={"title": title}),
                     tag("h1", value_str, attrs={"title": value_str}),
                 ],
+                attrs=dict(style=styles_inner)
             )
         ],
         attrs={
-            "class": classes,
-            "style": styles,
+            "style": styles_outter,
         },
     )
+
+def _render_cell_tuple(cell: Tuple) -> str:
+    assert 2 <= len(cell) <= 3
+    if len(cell) == 2:
+        cell += ({},)
+    key, value, opt = cell
+    return render_cell(key, value, **opt)
 
 
 class StatsGrid:
@@ -106,7 +126,7 @@ class StatsGrid:
                 content.append(caption_html)
 
         for row in self.data:
-            content.append(tag("div", [_render_cell(cell) for cell in row]))
+            content.append(tag("div", [_render_cell_tuple(cell) for cell in row]))
 
         if self.caption and self.caption_position[0] == "bottom":
             content.append(caption_html)
