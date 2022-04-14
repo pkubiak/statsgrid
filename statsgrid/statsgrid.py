@@ -118,13 +118,13 @@ class StatsGrid:
         if not isinstance(caption_position, str):
             raise ValueError()
         try:
-            vertical, horizontal = caption_position.split(" ")
-            assert vertical in {"top", "bottom"}
-            assert horizontal in {"left", "center", "right"}
+            self.caption_position = tuple(caption_position.split(" "))
+            assert len(self.caption_position) == 2
+            assert self.caption_position[0] in {"top", "bottom"}
+            assert self.caption_position[1] in {"left", "center", "right"}
         except (ValueError, AssertionError) as e:
             raise ValueError(f"Wrong caption_position set: {caption_position}") from e
-
-        self.caption_position = caption_position
+        assert isinstance(self.caption_position, tuple)
 
     def __call__(self, **kwargs) -> "StatsGrid":
         params = {**self.__dict__, **kwargs}

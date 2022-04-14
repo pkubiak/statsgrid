@@ -28,7 +28,7 @@ def test_caption_position(vertical, horizontal):
 
     html = sg.to_html().replace("\n", "")
 
-    print(html)
+    assert "<figcaption" in html
     figcaption = re.search("<figcaption.*</figcaption>", html).group()
 
     assert "mycaption" in figcaption
