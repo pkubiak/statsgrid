@@ -11,6 +11,4 @@ def test_xyz():
 
 def test_render_with_color():
     html = render_cell("key", "value", color="warning")
-    assert (
-        "linear-gradient" in html
-    )
+    assert "linear-gradient" in html
