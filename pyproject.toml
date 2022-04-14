@@ -1,6 +1,33 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "statsgrid"
+description = "Module for creating Grafana style metrics dashboards in python."
+readme = "README.md"
+keywords = ["python", "visualization", "metrics-visualization"]
+license = {file = "LICENSE"}
+dynamic = ["version"]
+
+
+[tool.setuptools]
+package-data = {statsgrid=["style.css"]}
+
+
+[tool.setuptools.packages.find]
+include = ["statsgrid*", "*.css"]  # package names should match these glob patterns (["*"] by default)
+
+
+[tool.setuptools.dynamic]
+version = {attr = "statsgrid.__VERSION__"}
+
+
 [tool.mypy]
 python_version = 3.7
 exclude = '(test_.*\.py$)'
+
 
 [tool.pylint.messages_control]
 max-line-length = 120

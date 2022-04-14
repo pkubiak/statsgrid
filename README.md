@@ -15,6 +15,12 @@ Module for creating Grafana style metrics dashboards in python.
 
 ![Preview image](/misc/preview.jpg)
 
+## Installation
+
+```bash
+python -m pip install git+https://github.com/pkubiak/statsgrid.git
+```
+
 
 ## Examples
 

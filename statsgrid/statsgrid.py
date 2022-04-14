@@ -9,7 +9,7 @@ from .helpers import tag, build_linear_gradient, BUILTIN_COLORS
 with open(
     os.path.join(os.path.dirname(__file__), "style.css"), "r", encoding="utf-8"
 ) as file:
-    _BASE_CSS = file.read()
+    _BASE_CSS = file.read().replace("\t", "").replace("\n", "")
 
 
 def _render_value(value: Any) -> str:
