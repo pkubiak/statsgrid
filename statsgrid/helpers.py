@@ -82,15 +82,24 @@ def _hex_to_rgb(color: str) -> Tuple[int, int, int]:
 
 def _rgb_to_hex(red: float, green: float, blue: float) -> Tuple[str, str]:
     assert 0 <= red <= 1 and 0 <= green <= 1 and 0 <= blue <= 1
-    return "#%02x%02x%02x" % (round(255 * red), round(255 * green), round(255 * blue))
+    return "#%02x%02x%02x" % (round(255 * red), round(255 * green), round(255 * blue))  # noqa
 
 
 def build_linear_gradient(color: str) -> Tuple[str, str]:
+    """
+    Build CSS linear-gradient based on given color
+
+    Args:
+        color (str): _description_
+
+    Returns:
+        Tuple[str, str]: _description_
+    """    
     red, green, blue = _hex_to_rgb(color)
     is_dark = (red * 0.299 + green * 0.587 + blue * 0.114) <= 186
     factor = -1.0 if is_dark else 0.7
 
-    h, l, s = colorsys.rgb_to_hls(red / 255, green / 255, blue / 255)
+    h, l, s = colorsys.rgb_to_hls(red / 255, green / 255, blue / 255)  # noqa
 
     color1 = colorsys.hls_to_rgb(
         (h + 8 / 360) % 1, min(1, max(l + 0.15 * factor, 0)), s

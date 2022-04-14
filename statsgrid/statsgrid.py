@@ -45,7 +45,7 @@ def render_cell(
 
     Returns:
         str: HTML representation of cell
-    """    
+    """
     styles_outter = {}
     styles_inner = {}
     if size:
