@@ -1,0 +1,9 @@
+name: mypy
+
+on: [pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jpetrucciani/mypy-check@master
